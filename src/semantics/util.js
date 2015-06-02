@@ -28,7 +28,9 @@ import {
 } from '../syntax/TokenType.js';
 import {
   SLOPPY_MODE,
+  STRICT_MODE,
   STRONG_MODE,
+  TYPED_MODE,
   findLanguageMode,
 } from '../staticsemantics/LanguageMode.js';
 
@@ -38,7 +40,7 @@ import {
  */
 export function hasUseStrict(list) {
   let newMode = findLanguageMode(list, SLOPPY_MODE);
-  return newMode !== SLOPPY_MODE;
+  return newMode >= STRICT_MODE;
 }
 
 /**
@@ -47,7 +49,16 @@ export function hasUseStrict(list) {
  */
 export function hasUseStrong(list) {
   let newMode = findLanguageMode(list, SLOPPY_MODE);
-  return newMode === STRONG_MODE;
+  return newMode >= STRONG_MODE;
+}
+
+/**
+ * @param {Array<ParseTree>} list
+ * @return {boolean}
+ */
+export function hasUseTypes(list) {
+  let newMode = findLanguageMode(list, SLOPPY_MODE);
+  return newMode >= TYPED_MODE;
 }
 
 /**

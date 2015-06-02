@@ -16,19 +16,24 @@
 export const SLOPPY_MODE = 0;
 export const STRICT_MODE = 1;
 export const STRONG_MODE = 2;
+export const TYPED_MODE = 3;
 
 export function findLanguageMode(statements, mode) {
   if (mode !== STRONG_MODE) {
     for (let i = 0; i < statements.length; i++) {
       if (!statements[i].isDirectivePrologue()) {
         break;
-      }
-      if (statements[i].isUseStrictDirective()) {
-        if (mode === SLOPPY_MODE) {
+      } else if (statements[i].isUseStrictDirective()) {
+        if (mode < STRICT_MODE) {
           mode = STRICT_MODE;
         }
       } else if (statements[i].isUseStrongDirective()) {
-        return STRONG_MODE;  // Cannot get any stronger than this!
+        if (mode < STRONG_MODE) {
+          mode = STRONG_MODE;
+        }
+      } else if (statements[i].isUseTypesDirective()) {
+        mode = TYPED_MODE;
+        break;  // Cannot get any stronger than this!
       }
     }
   }

@@ -14,7 +14,7 @@
 
 import {isStrictKeyword} from '../syntax/Keywords.js';
 import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {SLOPPY_MODE, STRONG_MODE} from './LanguageMode.js';
+import {SLOPPY_MODE, STRICT_MODE, STRONG_MODE, TYPED_MODE} from './LanguageMode.js';
 import {StringSet} from '../util/StringSet.js';
 import {ARGUMENTS, EVAL, UNDEFINED} from '../syntax/PredefinedName.js';
 
@@ -40,8 +40,8 @@ class ParameterValidationVisitor extends ParseTreeVisitor {
     this.reportStrictKeywords_ = languageMode !== SLOPPY_MODE;
     // In the case of sloppy functions this changes when we see a default,
     // rest or destructuring param.
-    this.reportDuplicates_ = languageMode !== SLOPPY_MODE;
-    this.reportUndefined_ = languageMode === STRONG_MODE;
+    this.reportDuplicates_ = languageMode >= STRICT_MODE;
+    this.reportUndefined_ = languageMode >= STRONG_MODE;
   }
 
   visitBindingIdentifier(tree) {
