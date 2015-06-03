@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Enums for language mode. Strong mode implies strict mode.
+// Enums for language mode. Typed mode implies strong mode implies strict mode.
 export const SLOPPY_MODE = 0;
 export const STRICT_MODE = 1;
 export const STRONG_MODE = 2;
