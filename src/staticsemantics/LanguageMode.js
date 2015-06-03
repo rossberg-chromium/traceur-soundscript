@@ -19,7 +19,7 @@ export const STRONG_MODE = 2;
 export const TYPED_MODE = 3;
 
 export function findLanguageMode(statements, mode) {
-  if (mode !== STRONG_MODE) {
+  if (mode !== TYPED_MODE) {
     for (let i = 0; i < statements.length; i++) {
       if (!statements[i].isDirectivePrologue()) {
         break;
