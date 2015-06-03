@@ -23,7 +23,8 @@ export function findLanguageMode(statements, mode) {
     for (let i = 0; i < statements.length; i++) {
       if (!statements[i].isDirectivePrologue()) {
         break;
-      } else if (statements[i].isUseStrictDirective()) {
+      }
+      if (statements[i].isUseStrictDirective()) {
         if (mode < STRICT_MODE) {
           mode = STRICT_MODE;
         }
