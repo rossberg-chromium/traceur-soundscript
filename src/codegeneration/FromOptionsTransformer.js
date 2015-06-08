@@ -50,6 +50,7 @@ import {SpreadTransformer} from './SpreadTransformer.js';
 import {StrongArityTransformer} from './strong/StrongArityTransformer.js';
 import {StrongCoercionTransformer} from './strong/StrongCoercionTransformer.js';
 import {StrongModeTransformer} from './strong/StrongModeTransformer.js';
+import {TypedModeTransformer} from './typed/TypedModeTransformer.js';
 import {SymbolTransformer} from './SymbolTransformer.js';
 import {TemplateLiteralTransformer} from './TemplateLiteralTransformer.js';
 import {TypeTransformer} from './TypeTransformer.js';
@@ -86,6 +87,15 @@ export class FromOptionsTransformer extends MultiTransformer {
 
       append(StrongModeTransformer);
     }
+
+    if (transformOptions.typedMode) {
+      if (transformOptions.typedModeAsserts) {
+        // TODO
+      }
+
+      append(TypedModeTransformer);
+    }
+
 
 
     if (transformOptions.blockBinding) {

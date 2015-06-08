@@ -398,6 +398,10 @@ export class ParseTree {
     return this.isDirective_('strong');
   }
 
+  isUseTypesDirective() {
+    return this.isDirective_('types');
+  }
+
   toJSON() {
     return utilJSON.transform(this, ParseTree.replacer);
   }

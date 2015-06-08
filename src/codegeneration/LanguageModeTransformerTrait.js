@@ -17,7 +17,9 @@
 import {FUNCTION_BODY} from '../syntax/trees/ParseTreeType.js';
 import {
   SLOPPY_MODE,
+  STRICT_MODE,
   STRONG_MODE,
+  TYPED_MODE,
   findLanguageMode
 } from '../staticsemantics/LanguageMode.js';
 
@@ -51,12 +53,16 @@ export function LanguageModeTransformerTrait(ParseTreeTransformerClass) {
       return this.languageMode_ === SLOPPY_MODE;
     }
 
-    isStrongMode() {
-      return this.languageMode_ === STRONG_MODE;
+    isStrictMode() {
+      return this.languageMode_ >= STRICT_MODE;
     }
 
-    isStrictMode() {
-      return this.languageMode_ !== SLOPPY_MODE;
+    isStrongMode() {
+      return this.languageMode_ >= STRONG_MODE;
+    }
+
+    isTypedMode() {
+      return this.languageMode_ >= TYPED_MODE;
     }
 
     transformAndUpdateLanguageMode_(statements, transformFunction) {

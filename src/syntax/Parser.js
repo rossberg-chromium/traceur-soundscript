@@ -293,7 +293,7 @@ import {
   WithStatement,
   YieldExpression
 }  from './trees/ParseTrees.js';
-import {SLOPPY_MODE, STRICT_MODE, STRONG_MODE} from '../staticsemantics/LanguageMode.js';
+import {SLOPPY_MODE, STRICT_MODE, STRONG_MODE, TYPED_MODE} from '../staticsemantics/LanguageMode.js';
 
 /**
  * Differentiates between parsing for 'In' vs. 'NoIn'
@@ -474,7 +474,11 @@ export class Parser {
   }
 
   isStrongMode_() {
-    return this.options_.strongMode && this.languageMode_ === STRONG_MODE;
+    return this.options_.strongMode && this.languageMode_ >= STRONG_MODE;
+  }
+
+  isTypedMode_() {
+    return this.options_.typedMode && this.languageMode_ >= TYPED_MODE;
   }
 
   // 14 Script
@@ -536,6 +540,10 @@ export class Parser {
     } else if (this.options_.strongMode &&
                statement.isUseStrongDirective()) {
       this.restrictLanguageMode_(STRONG_MODE);
+      return false;
+    } else if (this.options_.typedMode &&
+               statement.isUseTypesDirective()) {
+      this.restrictLanguageMode_(TYPED_MODE);
       return false;
     }
     return true;

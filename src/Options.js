@@ -59,6 +59,8 @@ export const optionsV01 = enumerableOnlyObject({
   restParameters: true,
   strongMode: false,
   strongModeAsserts: false,
+  typedMode: false,
+  typedModeAsserts: false,
   script: false,
   sourceMaps: false,
   sourceRoot: false,
@@ -158,6 +160,8 @@ addFeatureOption('memberVariables', EXPERIMENTAL);
 addFeatureOption('require', EXPERIMENTAL);
 addFeatureOption('strongMode', EXPERIMENTAL);
 addFeatureOption('strongModeAsserts', EXPERIMENTAL);
+addFeatureOption('typedMode', EXPERIMENTAL);
+addFeatureOption('typedModeAsserts', EXPERIMENTAL);
 addFeatureOption('types', EXPERIMENTAL);
 
 let transformOptionsPrototype = {};
@@ -272,6 +276,19 @@ export class Options {
    */
   static experimental() {
     return new Options(experimentalOptions);
+  }
+
+  get typed() {
+    return this.types && this.typedMode && this.typedModeAsserts &&
+           this.strongMode && this.strongModeAsserts;
+  }
+
+  set typed(value) {
+    this.types = value;
+    this.typedMode = value;
+    this.typedModeAsserts = value;
+    this.strongMode = value;
+    this.strongModeAsserts = value;
   }
 
   get atscript() {
@@ -558,7 +575,10 @@ export function addOptions(flags, commandOptions) {
     'Turns on all experimental features',
     () => { commandOptions.experimental = true; }
   );
-
+  flags.option('--typed',
+    'Turns on all typing features',
+    () => { commandOptions.typed = true; }
+  );
   flags.option('--atscript',
     'Turns on all AtScript features',
     () => { commandOptions.atscript = true; }
